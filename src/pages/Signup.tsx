@@ -97,7 +97,10 @@ const SignUp: React.FC = () => {
       await signUp({ firstName, lastName, password, [contactMode]: contactMode === 'email' ? email : phone });
       navigate('/verify-otp', { state: { [contactMode]: contactMode === 'email' ? email : phone } });
     } catch (error) {
-      setError('Sign up failed. Please try again.');
+      setTimeout(() => {
+        setError('Sign up failed. Please try again.');
+      },2000);
+      
     }
   };
 
@@ -112,6 +115,7 @@ const SignUp: React.FC = () => {
             onChange={(e) => setFirstName(e.target.value)}
             placeholder="First Name"
             className="w-full p-3 border border-gray-300 rounded text-sm"
+            required
           />
         </div>
         <div className="mb-4">
@@ -121,6 +125,7 @@ const SignUp: React.FC = () => {
             onChange={(e) => setLastName(e.target.value)}
             placeholder="Last Name"
             className="w-full p-3 border border-gray-300 rounded text-sm"
+            required
           />
         </div>
         <div className="mb-4 relative">
@@ -130,6 +135,7 @@ const SignUp: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Set Password"
             className="w-full p-3 border border-gray-300 rounded text-sm"
+            required
           />
           <button
             type="button"
@@ -173,6 +179,7 @@ const SignUp: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Email"
               className="w-full p-3 border border-gray-300 rounded text-sm"
+              required
             />
           </div>
         ) : (
