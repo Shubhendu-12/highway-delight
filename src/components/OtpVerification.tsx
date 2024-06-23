@@ -12,11 +12,16 @@ const OtpVerification: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const { email, otp: correctOtp } = location.state as { email: string, otp: string };
     try {
-      await verifyOtp(email, otp);
-      navigate('/welcome');
+      if (otp === correctOtp) {
+        await verifyOtp(email, otp);
+        navigate('/welcome');
+      } else {
+        setError('Invalid OTP. Please try again.');
+      }
     } catch (error) {
-      setError('Invalid OTP. Please try again.');
+      setError('OTP verification failed. Please try again.');
     }
   };
 

@@ -1,7 +1,7 @@
 // This is a mock API implementation
 const API_URL = 'http://localhost:5000/api/auth';
 
-export const signUp = async (userData: any): Promise<void> => {
+export const signUp = async (userData: any): Promise<any> => {
     // Simulate API call
     const response = await fetch(`${API_URL}/signup`, {
       method: 'POST',
