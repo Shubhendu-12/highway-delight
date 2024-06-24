@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { login } from '../api/auth';
+import LogIn from '../assets/SignIn.png'
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -21,6 +22,11 @@ const Login: React.FC = () => {
   };
 
   return (
+    <div className='flex h-screen items-center justify-center bg-[#F4F4F4]'>
+      <div className='flex w-[900px] bg-white rounded-lg shadow-lg overflow-hidden p-2'>
+      <div className='w-1/2 p-6'>
+          <img src={LogIn} alt="signup" className='w-full h-full object-cover' />
+        </div>
     <div className="bg-white p-8 rounded-lg shadow-md w-96 mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-[#3A244A]">Fill what we know<span className='text-[#D72638]'>!</span></h2>
       <form onSubmit={handleSubmit}>
@@ -65,6 +71,8 @@ const Login: React.FC = () => {
       >
         Sign Up
       </button>
+    </div>
+    </div>
     </div>
   );
 };
