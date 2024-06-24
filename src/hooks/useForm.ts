@@ -15,8 +15,7 @@ export const useForm = (initialValues: FormValues) => {
   };
 
   const validate = (name: string, value: string) => {
-    // Add your validation logic here
-    // This is a simple example
+    // Added validation logic here
     if (!value) {
       setErrors({ ...errors, [name]: 'This field is required' });
     } else {

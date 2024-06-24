@@ -1,7 +1,7 @@
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+import User from '../models/User.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
 
 // Setup nodemailer transporter (replace with your email service details)
 const transporter = nodemailer.createTransport({
@@ -16,7 +16,7 @@ function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
   try {
     const { firstName, lastName, email, password, phone } = req.body;
 
@@ -64,13 +64,13 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.verifyOTP = async (req, res) => {
+export const verifyOTP = async (req, res) => {
   // In a real-world scenario, you'd verify the OTP here
   // For this example, we'll just return success
   res.json({ message: 'OTP verified successfully' });
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 

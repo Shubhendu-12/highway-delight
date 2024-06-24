@@ -1,10 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-const nodemailer = require('nodemailer');
-const mongoose = require('mongoose');
-require('dotenv').config();
-const authRoutes = require('./routes/authRoutes');
+import express from 'express';
+import cors from 'cors';
+import nodemailer from 'nodemailer';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
+import authRoutes from './routes/authRoutes.js';
+import path from "path";
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -53,7 +55,15 @@ app.post('/send-otp', async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to send OTP' });
   }
 });
+
 app.use('/api/auth', authRoutes);
+const  __dirname = path.resolve();
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.use(express.static(path.join(__dirname, '../dist')));
+
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname,'../dist','index.html'));
+});

@@ -44,14 +44,14 @@ const SignUp: React.FC = () => {
      
           <h2 className="text-3xl font-bold mb-6 text-[#3A244A]">Let us know  <span className='text-[#D72638]'>!</span></h2>
         
-          {/* <div className="text-right mt-4"> */}
+        
             <button
               onClick={() => navigate('/login')}
               className="text-[#3A244A] hover:underline text-lg font-bold underline"
             >
               Sign <span className='text-[#D72638]'>In</span>
             </button>
-          {/* </div> */}
+         
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input

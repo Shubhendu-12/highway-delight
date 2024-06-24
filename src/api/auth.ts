@@ -1,4 +1,4 @@
-// This is a mock API implementation
+
 const API_URL = 'http://localhost:5000/api/auth';
 
 export const signUp = async (userData: any): Promise<any> => {
@@ -14,8 +14,7 @@ export const signUp = async (userData: any): Promise<any> => {
     if (!response.ok) {
       throw new Error('Sign up failed');
     }
-    // console.log('User data saved:', userData);
-    // return new Promise((resolve) => setTimeout(resolve, 1000));
+   
     return response.json();
    
   };
