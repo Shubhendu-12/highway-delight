@@ -22,7 +22,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-md w-96 mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-[#3A244A]">Fill what we know!</h2>
+      <h2 className="text-3xl font-bold mb-6 text-[#3A244A]">Fill what we know<span className='text-[#D72638]'>!</span></h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <input
@@ -54,14 +54,14 @@ const Login: React.FC = () => {
         {error && <p className="text-[#D72638] text-xs mb-4">{error}</p>}
         <button
           type="submit"
-          className="w-full p-3 bg-[#3A244A] text-white rounded hover:bg-[#2A1A3A] transition-colors text-sm mb-4"
+          className="w-full p-3 bg-[#3A244A] text-white rounded-lg hover:bg-[#2A1A3A] transition-colors text-sm mb-4"
         >
           Sign In
         </button>
       </form>
       <button
         onClick={() => navigate('/signup')}
-        className="w-full p-3 border border-[#3A244A] text-[#3A244A] rounded hover:bg-gray-100 transition-colors text-sm"
+        className="w-full p-3 border border-[#3A244A] text-[#3A244A] rounded-lg hover:bg-gray-100 transition-colors text-sm"
       >
         Sign Up
       </button>
