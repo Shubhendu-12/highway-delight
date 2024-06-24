@@ -1,19 +1,30 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
-
-// Setup nodemailer transporter (replace with your email service details)
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+import transporter from '../index.js'; // Correctly import the transporter
 
 function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+async function hashPassword(password) {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
+}
+
+async function createJWT(userId) {
+  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+}
+
+async function sendOTPEmail(email, otp) {
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: 'Your OTP for Signup',
+    text: `Your OTP is: ${otp}`
+  };
+
+  return transporter.sendMail(mailOptions);
 }
 
 export const signup = async (req, res) => {
@@ -27,8 +38,7 @@ export const signup = async (req, res) => {
     }
 
     // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await hashPassword(password);
 
     // Create new user
     user = new User({
@@ -45,17 +55,10 @@ export const signup = async (req, res) => {
     const otp = generateOTP();
 
     // Send OTP email
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Your OTP for Signup',
-      text: `Your OTP is: ${otp}`
-    };
-
-    await transporter.sendMail(mailOptions);
+    await sendOTPEmail(email, otp);
 
     // Generate JWT
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = await createJWT(user._id);
 
     res.status(201).json({ token, otp });
   } catch (error) {
@@ -65,8 +68,7 @@ export const signup = async (req, res) => {
 };
 
 export const verifyOTP = async (req, res) => {
-  // In a real-world scenario, you'd verify the OTP here
-  // For this example, we'll just return success
+  // OTP Verification logic here
   res.json({ message: 'OTP verified successfully' });
 };
 
@@ -87,11 +89,11 @@ export const login = async (req, res) => {
     }
 
     // Generate JWT
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = await createJWT(user._id);
 
     res.json({ token });
   } catch (error) {
-    console.error(error);
+    console.error('Login error: ', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
