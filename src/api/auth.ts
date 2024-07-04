@@ -1,5 +1,6 @@
 
-const API_URL = 'http://localhost:5000/api/auth';
+// const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = 'https://mern-otp-signup-app.onrender.com/api/auth'
 
 export const signUp = async (userData: any): Promise<any> => {
     // Simulate API call
